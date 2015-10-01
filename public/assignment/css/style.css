@@ -1,0 +1,11 @@
+.text_left {
+	text-align: left;
+}
+
+.top_margin {
+	margin-top: 10px;
+}
+
+.btn-transparent {
+  	border:0px solid transparent; /* this was 1px earlier */
+}
