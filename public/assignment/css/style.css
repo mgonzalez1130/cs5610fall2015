@@ -9,3 +9,59 @@
 .btn-transparent {
   	border:0px solid transparent; /* this was 1px earlier */
 }
+
+.box-1 {
+	border: 1px solid lightgray;
+	padding: 5px;
+}
+
+.box-2 {
+	border: 1px solid lightgray;
+  padding-bottom: 35px;
+}
+
+.form-fields {
+  list-style-type: none;
+}
+.form-field-item {
+  list-style-type: none;
+  width: 100%;
+  max-width: 100%;
+}
+
+.form-field-text {
+  padding-top: 10px;
+  clear: left;
+}
+
+.form-field-type {
+  width: 60%;
+  max-width: 100%;
+  float:left;
+}
+
+.form-field-actions {
+  width: 40%;
+  max-width: 100%;
+  float: right;
+}
+
+#add-field-type {
+  width: 72%;
+  max-width: 100%;
+  float:left;
+}
+
+#add-field-actions {
+  position: absolute;
+  left: 225px;
+  bottom: 20px;
+}
+
+hr {
+  clear:left;
+  margin-top: 60px;
+  border-style: solid;
+  border-width: 2px;
+  width: 95%;
+}
