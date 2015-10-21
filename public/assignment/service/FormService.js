@@ -3,7 +3,7 @@
 (function() {
 	angular
 		.module("FormBuilderApp")
-		.factor("FormService", FormService);
+		.factory("FormService", FormService);
 	
 	function FormService() {
 		var forms = [];
@@ -34,7 +34,8 @@
 		
 		function findAllFormsForUser(userId, callback) {
 			var usersForms = [];
-			for (var form in forms) {
+			for (var i = 0; i < forms.length; i++) {
+				var form = forms[i];
 				if (form.userid == userId) {
 					usersForms.push(form);
 				}
@@ -53,12 +54,13 @@
 		}
 		
 		function updateFormById(formId, newForm, callback) {
-			for (var form in forms) {
-				if (form.id == formId) {
-					newForm.id = form.id;
-					newForm.userid = form.userId;
-					form = newForm;
-					callback(form);
+			for (var i = 0; i < forms.length; i++) {
+				var currentForm = forms[i];
+				if (currentForm.id == formId) {
+					newForm.id = currentForm.id;
+					newForm.userid = currentForm.userid;
+					forms[i] = newForm;
+					callback(currentForm);
 					break;
 				}
 			}

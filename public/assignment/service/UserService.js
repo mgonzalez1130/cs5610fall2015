@@ -27,13 +27,18 @@
 		}
 		
 		function findUserByUsernameAndPassword(username, password, callback) {
-			for (var currentUser in users) {
+			var foundUser = false;
+			for (var i = 0; i < users.length; i++) {
+				var currentUser = users[i];
 				if (currentUser.username == username && currentUser.password == password) {
+					foundUser = true;
 					callback(currentUser);
 					break;
 				}
 			}
-			callback(null);
+			if (!foundUser) {
+				callback(null);
+			}
 		}
 		
 		function findAllUsers(callback) {
