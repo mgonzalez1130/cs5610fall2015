@@ -25,14 +25,15 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular-route.js"></script>
 	<script src="app.js"></script>
     <script src="config.js"></script>
-    <script src="header.controller.js"></script>
-    <script src="sidebar.controller.js"></script>
-    <script src="service/UserService.js"></script>
-    <script src="service/FormService.js"></script>
-    <script src="login.controller.js"></script>
-    <script src="register.controller.js"></script>
-    <script src="profile.controller.js"></script>
-    <script src="form.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
+    <script src="views/sidebar/sidebar.controller.js"></script>
+    <script src="views/login/login.controller.js"></script>
+    <script src="views/register/register.controller.js"></script>
+    <script src="views/profile/profile.controller.js"></script>
+    <script src="views/form/form.controller.js"></script>
+    <script src="services/UserService.js"></script>
+    <script src="services/FormService.js"></script>
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -43,11 +44,11 @@
 
 <body>
 
-<div ng-include="'header.view.html'"></div>
+<div ng-include="'views/header/header.view.html'"></div>
 
 <div class="container-fluid">
     <div class="row">        
-        <div ng-include="'sidebar.view.html'"></div>		
+        <div ng-include="'views/sidebar/sidebar.view.html'"></div>		
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" ng-view>
         </div>		
     </div>

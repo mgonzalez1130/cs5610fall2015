@@ -6,22 +6,22 @@
 		.config(function($routeProvider) {
 			$routeProvider
 				.when("/home", {
-					templateUrl: "home.view.html"
+					templateUrl: "views/home/home.view.html"
 				})
 				.when("/login", {
-					templateUrl: "login.view.html",
+					templateUrl: "views/login/login.view.html",
 					controller: "LoginController"
 				})
 				.when("/register", {
-					templateUrl: "register.view.html",
+					templateUrl: "views/register/register.view.html",
 					controller: "RegisterController"
 				})
 				.when("/profile", {
-					templateUrl: "profile.view.html",
+					templateUrl: "views/profile/profile.view.html",
 					controller: "ProfileController"
 				})
 				.when("/form", {
-					templateUrl: "form.view.html",
+					templateUrl: "views/form/form.view.html",
 					controller: "FormController"
 				})
 				.otherwise({
