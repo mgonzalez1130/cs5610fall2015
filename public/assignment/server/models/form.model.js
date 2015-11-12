@@ -1,4 +1,5 @@
 var forms = require('./form.mock.json');
+var uuid = require('node-uuid');
 
 module.exports = function() {
 	var api = {
@@ -7,13 +8,20 @@ module.exports = function() {
 		findFormById: findFormById,
 		updateForm: updateForm,
 		deleteForm: deleteForm,
-		findFormByTitle: findFormByTitle
+		findFormByTitle: findFormByTitle,
+		findUserForms: findUserForms,
+		getFormFields: getFormFields,
+		getField: getField,
+		deleteField: deleteField,
+		createField: createField,
+		updateField: updateField
 	};
 	return api;
 	
-	function createForm(form) {
+	function createForm(form, userId) {
+		form.userId = userId;
+		form.id = uuid.v1();
 		forms.push(form);
-		return forms;
 	}
 	
 	function findAllForms() {
@@ -38,16 +46,15 @@ module.exports = function() {
 				break;
 			}
 		}
-		return forms;
 	}
 	
 	function deleteForm(formId) {
 		for (var i = 0; i < forms.length; i++) {
 			if (forms[i].id == formId) {
 				forms.splice(i, 1);
+				break;
 			}
 		}
-		return forms;
 	}
 	
 	function findFormByTitle(title) {
@@ -57,5 +64,76 @@ module.exports = function() {
 			}
 		}
 		return null;
+	}
+	
+	function findUserForms(userId) {
+		var userForms = [];
+		for (var i = 0; i < forms.length; i++) {
+			if (forms[i].userId == userId) {
+				userForms.push(forms[i]);
+			}
+		}
+		return userForms;
+	}
+	
+	function getFormFields(formId) {
+		for (var i = 0; i < forms.length; i++) {
+			if (forms[i].id == formId) {
+				return forms[i].fields;
+			}
+		}
+		return [];
+	}
+	
+	function getField(formId, fieldId) {
+		for (var i = 0; i < forms.length; i++) {
+			if (forms[i].id == formId) {
+				var fields = forms[i].fields;
+				for (var j = 0; j < fields.length; j++) {
+					if (fields[j].id == fieldId) {
+						return fields[j];
+					}
+				}
+			}
+		}
+		return null;
+	}
+	
+	function deleteField(formId, fieldId) {
+		for (var i = 0; i < forms.length; i++) {
+			if (forms[i].id == formId) {
+				var fields = forms[i].fields;
+				for (var j = 0; j < fields.length; j++) {
+					if (fields[j].id == fieldId) {
+						forms[i].fields.splice(j, 1);
+						break;
+					}
+				}
+			}
+		}
+	}
+	
+	function createField(formId, field) {
+		field.id = uuid.v1();
+		for (var i = 0; i < forms.length; i++) {
+			if (forms[i].id == formId) {
+				forms[i].fields.push(field);
+				break;
+			}
+		}
+	}
+	
+	function updateField(formId, fieldId, field) {
+		for (var i = 0; i < forms.length; i++) {
+			if (forms[i].id == formId) {
+				var fields = forms[i].fields;
+				for (var j = 0; j < fields.length; j++) {
+					if (fields[j].id == fieldId) {
+						forms[i].fields[j] = field;
+						break; 
+					}
+				}
+			}
+		}
 	}
 };

@@ -55,7 +55,7 @@ module.exports = function() {
 	
 	function findUserByUsername(username) {
 		for (var i = 0; i < users.length; i++) {
-			if (users[i].username = username) {
+			if (users[i].username == username) {
 				return users[i];
 			}
 		}
