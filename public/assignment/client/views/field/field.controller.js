@@ -6,17 +6,19 @@
 		.controller("FieldController", FieldController);
 		
 	function FieldController($scope, $routeParams, FieldService) {
+		var model = this;
+		
 		var userId = $routeParams.userId;
 		var formId = $routeParams.formId;
 		
-		$scope.addField = addField;
-		$scope.deleteField = deleteField;
+		model.addField = addField;
+		model.deleteField = deleteField;
 		
 		setFields();
 		
 		function setFields() {
 			FieldService.getFieldsForForm(formId).then(function(response) {
-				$scope.fields = response;
+				model.fields = response;
 			});
 		}
 		
@@ -52,7 +54,7 @@
 		}
 		
 		function deleteField(fieldIndex) {
-			var fieldId = $scope.fields[fieldIndex].id;
+			var fieldId = model.fields[fieldIndex].id;
 			console.log("Trying to delete field " + fieldId + " at index " + fieldIndex);
 			FieldService.deleteFieldFromForm(formId, fieldId).then(function(response) {
 				setFields();

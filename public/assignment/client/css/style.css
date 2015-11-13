@@ -7,7 +7,7 @@
 }
 
 .btn-transparent {
-  	border:0px solid transparent; /* this was 1px earlier */
+  	border:0px solid transparent;
 }
 
 .box-1 {
@@ -23,45 +23,11 @@
 }
 
 .move-right {
-  padding-left: 20px;
+  padding-left: 35px;
 }
 
 .form-fields {
   list-style-type: none;
-}
-.form-field-item {
-  list-style-type: none;
-  width: 100%;
-  max-width: 100%;
-}
-
-.form-field-text {
-  padding-top: 10px;
-  clear: left;
-}
-
-.form-field-type {
-  width: 60%;
-  max-width: 100%;
-  float:left;
-}
-
-.form-field-actions {
-  width: 40%;
-  max-width: 100%;
-  float: right;
-}
-
-#add-field-type {
-  width: 72%;
-  max-width: 100%;
-  float:left;
-}
-
-#add-field-actions {
-  position: absolute;
-  left: 225px;
-  bottom: 20px;
 }
 
 hr {

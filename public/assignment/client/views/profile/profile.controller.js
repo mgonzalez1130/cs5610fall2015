@@ -5,21 +5,24 @@
 		.module("FormBuilderApp")
 		.controller("ProfileController", ProfileController);
 		
-	function ProfileController($scope, $rootScope, UserService) {
+	function ProfileController($rootScope, UserService) {
+		var model = this;
 		var currentUser = $rootScope.user;
-		$scope.username = currentUser.username;
-		$scope.password = currentUser.password;
-		$scope.firstName = currentUser.firstName;
-		$scope.lastName = currentUser.lastName;
-		$scope.email = currentUser.email;
 		
-		$scope.update = update;
+		model.update = update;
+		model.username = currentUser.username;
+		model.password = currentUser.password;
+		model.firstName = currentUser.firstName;
+		model.lastName = currentUser.lastName;
+		model.email = currentUser.email;
+		
+
 		function update() {
-			currentUser.username = $scope.username;
-			currentUser.password = $scope.password;
-			currentUser.firstName = $scope.firstName;
-			currentUser.lastName = $scope.lastName;
-			currentUser.email = $scope.email;
+			currentUser.username = model.username;
+			currentUser.password = model.password;
+			currentUser.firstName = model.firstName;
+			currentUser.lastName = model.lastName;
+			currentUser.email = model.email;
 			$rootScope.user = currentUser;
 			
 			UserService.updateUser(currentUser.id, currentUser)

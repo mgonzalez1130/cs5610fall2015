@@ -6,12 +6,14 @@
 		.controller("RegisterController", RegisterController);
 		
 	function RegisterController($scope, $rootScope, $location, UserService) {
-		$scope.register = register;
+		var model = this;
+		model.register = register;
+		
 		function register() {
 			var newUser = {
-				username: $scope.username,
-				password: $scope.password,
-				email: $scope.email
+				username: model.username,
+				password: model.password,
+				email: model.email
 			};
 			UserService.createUser(newUser).then(function(response){
 				UserService.findUserByUsernameAndPassword(newUser.username, newUser.password)
