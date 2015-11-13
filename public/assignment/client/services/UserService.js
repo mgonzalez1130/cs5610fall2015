@@ -5,8 +5,7 @@
 		.module("FormBuilderApp")
 		.factory("UserService", UserService);
 		
-	function UserService() {
-		var users = [];
+	function UserService($http, $q) {
 		var service = {
 			findUserByUsernameAndPassword : findUserByUsernameAndPassword,
 			findAllUsers : findAllUsers,
@@ -16,60 +15,59 @@
 		};
 		return service;
 		
-		function guid() {
-			function s4() {
-				return Math.floor((1 + Math.random()) * 0x10000)
-				.toString(16)
-				.substring(1);
-			}
-			return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-				s4() + '-' + s4() + s4() + s4();
+		function findUserByUsernameAndPassword(username, password) {
+			var deferred = $q.defer();
+			
+			$http.get("/api/assignment/user?username="+username+"&password="+password)
+			.success(function(response) {
+				deferred.resolve(response);
+			});
+			
+			return deferred.promise;
 		}
 		
-		function findUserByUsernameAndPassword(username, password, callback) {
-			var foundUser = false;
-			for (var i = 0; i < users.length; i++) {
-				var currentUser = users[i];
-				if (currentUser.username == username && currentUser.password == password) {
-					foundUser = true;
-					callback(currentUser);
-					break;
-				}
-			}
-			if (!foundUser) {
-				callback(null);
-			}
+		function findAllUsers() {
+			var deferred = $q.defer();
+			
+			$http.get("/api/assignment/user")
+			.success(function(response) {
+				deferred.resolve(response);
+			});
+				
+			return deferred.promise;
 		}
 		
-		function findAllUsers(callback) {
-			callback(users);
+		function createUser(user) {
+			var deferred = $q.defer();
+			
+			$http.post("/api/assignment/user", user)
+			.success(function(response) {
+				deferred.resolve(response);
+			});
+			
+			return deferred.promise;
 		}
 		
-		function createUser(user, callback) {
-			user.id = guid();
-			users.push(user);
-			callback(user);
+		function deleteUserById(id){
+			var deferred = $q.defer();
+			
+			$http.delete("/api/assignment/user/"+id)
+			.success(function(response) {
+				deferred.resolve(response);
+			});
+			
+			return deferred.promise;
 		}
 		
-		function deleteUserById(id, callback){
-			for (var i = 0; i < users.length; i++) {
-				if(users[i].id == id) {
-					users.splice(i, 1);
-					break;
-				}
-			}
-			callback(users);
-		}
-		
-		function updateUser(id, user, callback) {
-			for (var currentUser in users) {
-				if (currentUser.id == id) {
-					user.id = currentUser.id;
-					currentUser = user;
-					callback(currentUser);
-					break;
-				}
-			}
+		function updateUser(id, user) {
+			var deferred = $q.defer();
+			
+			$http.put("/api/assignment/user/"+id, user)
+			.success(function(response){
+				deferred.resolve(response);
+			});
+			
+			return deferred.promise;
 		}
 		
 	}

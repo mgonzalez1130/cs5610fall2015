@@ -19,7 +19,7 @@
 			{
 				"id": "333",
 				"label": "Address",
-				"type": "TEXT",
+				"type": "TEXTAREA",
 				"placeholder": "Address"
 			},
 			{
@@ -46,7 +46,7 @@
 			{
 				"id": "666",
 				"label": "Email",
-				"type": "EMAIL",
+				"type": "TEXT",
 				"placeholder": "Email"
 			}
 		]

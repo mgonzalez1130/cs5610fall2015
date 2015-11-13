@@ -13,16 +13,13 @@
 				password: $scope.password,
 				email: $scope.email
 			};
-			UserService.createUser(newUser, registerCallback);
-		}
-		
-		function registerCallback(user) {
-			if (user != null) {
-				$rootScope.user = user;
-				$location.url("/profile");
-			} else {
-				console.log("User not successfully created");
-			}
+			UserService.createUser(newUser).then(function(response){
+				UserService.findUserByUsernameAndPassword(newUser.username, newUser.password)
+				.then(function(response){
+					$rootScope.user = response;
+					$location.url("/profile");
+				});
+			});
 		}
 	}
 })();

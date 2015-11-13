@@ -8,10 +8,13 @@
 	function LoginController($scope, $rootScope, $location, UserService) {
 		$scope.Login = Login;
 		function Login() {
-			UserService.findUserByUsernameAndPassword($scope.username, $scope.password, LoginCallback);
+			UserService.findUserByUsernameAndPassword($scope.username, $scope.password)
+			.then(function(response){
+				LoginResponse(response);
+			});
 		}
 		
-		function LoginCallback(user) {
+		function LoginResponse(user) {
 			if (user != null) {
 				$rootScope.user = user;
 				$location.url("/profile");

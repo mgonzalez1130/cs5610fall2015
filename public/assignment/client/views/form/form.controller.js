@@ -7,48 +7,57 @@
 		
 	function FormController($scope, $rootScope, FormService) {
 		var currentUser = $rootScope.user;
+		$scope.currentUser = currentUser;
 		$scope.selectedFormIndex = -1;
-
-		FormService.findAllFormsForUser(currentUser.id, FindAllFormsCallback)		
-		function FindAllFormsCallback(forms) {
-			$scope.forms = forms;
-		}
 		
+		//Functions that are available to the UI
 		$scope.addForm = addForm;
-		function addForm() {
-			var newForm = {form_name : $scope.form_name};
-			FormService.createFormByUser(currentUser.id, newForm, AddFormCallback)
-		}
-		function AddFormCallback(form) {
-			$scope.forms.push(form);
-			$scope.form_name = "";
-		}
-		
 		$scope.updateForm = updateForm;
-		function updateForm() {
-			var newForm = {form_name : $scope.form_name};
-			var selectedForm = $scope.forms[$scope.selectedFormIndex];
-			FormService.updateFormById(selectedForm.id, newForm, UpdateFormCallback);
-		}
-		function UpdateFormCallback(form) {
-			FormService.findAllFormsForUser(currentUser.id, FindAllFormsCallback);
-			$scope.selectedFormIndex = -1;
-			$scope.form_name = "";
-		}
-		
 		$scope.deleteForm = deleteForm;
-		function deleteForm(index) {
-			FormService.deleteFormById($scope.forms[index].id, DeleteFormCallback);
-		}
-		function DeleteFormCallback(forms) {
-			$scope.forms = forms;
+		$scope.selectForm = selectForm;
+
+		//Find and set all the forms for the current user
+		setUserForms();
+		
+		function setUserForms(){
+			FormService.findAllFormsForUser(currentUser.id).then(function(response){
+				$scope.forms = response;
+			});
 		}
 		
-		$scope.selectForm = selectForm;
+		function addForm() {
+			var newForm = {title : $scope.title};
+			FormService.createFormByUser(currentUser.id, newForm).then(function(response){
+				setUserForms();
+				resetSelectedForm();
+			});
+		}
+
+		function updateForm() {
+			var selectedForm = $scope.forms[$scope.selectedFormIndex];
+			selectedForm.title = $scope.title;
+			FormService.updateFormById(selectedForm.id, selectedForm).then(function(response){
+				setUserForms();
+				resetSelectedForm();
+			});
+		}
+		
+		function deleteForm(index) {
+			FormService.deleteFormById($scope.forms[index].id).then(function(response){
+				setUserForms();
+			});
+		}
+		
 		function selectForm(index) {
 			$scope.selectedFormIndex = index;
-			$scope.form_name = $scope.forms[index].form_name;
+			$scope.title = $scope.forms[index].title;
 		}
+		
+		function resetSelectedForm(){
+			$scope.selectedFormIndex = -1;
+			$scope.title = "";
+		}
+		
 	}
 
 })();
