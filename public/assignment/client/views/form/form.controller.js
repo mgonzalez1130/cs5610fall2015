@@ -28,7 +28,7 @@
 		}
 		
 		function addForm() {
-			var newForm = {title : model.title};
+			var newForm = {title : model.title, fields: []};
 			FormService.createFormByUser(currentUser.id, newForm).then(function(response){
 				setUserForms();
 				resetSelectedForm();
