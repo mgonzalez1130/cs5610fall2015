@@ -55,7 +55,7 @@
 		}
 		
 		function deleteField(fieldIndex) {
-			var fieldId = model.fields[fieldIndex].id;
+			var fieldId = model.fields[fieldIndex]._id;
 			console.log("Trying to delete field " + fieldId + " at index " + fieldIndex);
 			FieldService.deleteFieldFromForm(formId, fieldId).then(function(response) {
 				setFields();

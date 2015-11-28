@@ -29,13 +29,13 @@
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"> </span>
                             </button>
                             <button type="button" ng-click="model.updateForm()" class="btn btn-default btn-transparent" 
-                                    ng-class="{'disabled' : selectedFormIndex == -1}" aria-label="Update">
+                                    ng-class="{'disabled' : model.selectedFormIndex == -1}" aria-label="Update">
                                 <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
                             </button>
                         </td>
                     </tr>
                     <tr ng-repeat="form in model.forms">
-                        <td class="form-edit"><a href="#/user/{{model.currentUser.id}}/form/{{form.id}}/fields">{{form.title}}</a></td>
+                        <td class="form-edit"><a href="#/user/{{model.currentUser._id}}/form/{{form._id}}/fields">{{form.title}}</a></td>
                         <td>
                             <button type="button" ng-click="model.deleteForm($index)" class="btn btn-default btn-transparent" aria-label="Remove">
                                 <span class="glyphicon glyphicon-remove" aria-hidden="true"> </span>

@@ -22,14 +22,14 @@
 		setUserForms();
 		
 		function setUserForms(){
-			FormService.findAllFormsForUser(currentUser.id).then(function(response){
+			FormService.findAllFormsForUser(currentUser._id).then(function(response){
 				model.forms = response;
 			});
 		}
 		
 		function addForm() {
 			var newForm = {title : model.title, fields: []};
-			FormService.createFormByUser(currentUser.id, newForm).then(function(response){
+			FormService.createFormByUser(currentUser._id, newForm).then(function(response){
 				setUserForms();
 				resetSelectedForm();
 			});
@@ -38,14 +38,14 @@
 		function updateForm() {
 			var selectedForm = model.forms[model.selectedFormIndex];
 			selectedForm.title = model.title;
-			FormService.updateFormById(selectedForm.id, selectedForm).then(function(response){
+			FormService.updateFormById(selectedForm._id, selectedForm).then(function(response){
 				setUserForms();
 				resetSelectedForm();
 			});
 		}
 		
 		function deleteForm(index) {
-			FormService.deleteFormById(model.forms[index].id).then(function(response){
+			FormService.deleteFormById(model.forms[index]._id).then(function(response){
 				setUserForms();
 			});
 		}

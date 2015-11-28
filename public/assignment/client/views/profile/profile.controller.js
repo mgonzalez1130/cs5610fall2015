@@ -25,7 +25,7 @@
 			currentUser.email = model.email;
 			$rootScope.user = currentUser;
 			
-			UserService.updateUser(currentUser.id, currentUser)
+			UserService.updateUser(currentUser._id, currentUser)
 		}
 	}
 })();

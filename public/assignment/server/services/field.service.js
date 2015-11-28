@@ -5,7 +5,9 @@ module.exports = function(app, formModel) {
 	//the specified id
 	app.get("/api/assignment/form/:formId/field", function(req, res) {
 		var formId = req.params.formId;
-		res.json(formModel.getFormFields(formId));
+		formModel.getFormFields(formId).then(function(response){
+			res.json(response);
+		});
 	});
 	
 	//returns the field object with the specified id and belonging to the
@@ -13,7 +15,9 @@ module.exports = function(app, formModel) {
 	app.get("/api/assignment/form/:formId/field/:fieldId", function(req, res) {
 		var formId = req.params.formId;
 		var fieldId = req.params.fieldId;
-		res.json(formModel.getField(formId, fieldId));
+		formModel.getField(formId, fieldId).then(function(response){
+			res.json(response);
+		});
 	});
 	
 	//removes the field object with the speicified id and belonging to the
@@ -21,7 +25,9 @@ module.exports = function(app, formModel) {
 	app.delete("/api/assignment/form/:formId/field/:fieldId", function(req, res) {
 		var formId = req.params.formId;
 		var fieldId = req.params.fieldId;
-		res.json(formModel.deleteField(formId, fieldId));
+		formModel.deleteField(formId, fieldId).then(function(response){
+			res.json(response);
+		});
 	});
 	
 	//creates a new field whose properties are the same as the field object
@@ -29,7 +35,9 @@ module.exports = function(app, formModel) {
 	app.post("/api/assignment/form/:formId/field", function(req, res) {
 		var formId = req.params.formId;
 		var field = req.body;
-		res.json(formModel.createField(formId, field));
+		formModel.createField(formId, field).then(function(response){
+			res.json(response);
+		});
 	});
 	
 	//updates the field object with the specified id
@@ -37,6 +45,8 @@ module.exports = function(app, formModel) {
 		var formId = req.params.formId;
 		var fieldId = req.params.fieldId;
 		var field = req.body;
-		res.json(formModel.updateField(formId, fieldId, field));
+		formModel.updateField(formId, fieldId, field).then(function(response){
+			res.json(response);
+		});
 	});
 }
