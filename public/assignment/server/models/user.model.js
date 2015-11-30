@@ -18,7 +18,7 @@ module.exports = function(db, mongoose) {
 	function createUser(user) {
 		var deferred = q.defer();
 		UserModel.create(user, function(err, result){
-			UserModel.fine(function(err, users){
+			UserModel.find(function(err, users){
 				deferred.resolve(users);
 			});
 		});
@@ -46,7 +46,7 @@ module.exports = function(db, mongoose) {
 		UserModel.update(
 			{ _id : userId },
 			{
-				fileName: user.firstName,
+				firstName: user.firstName,
 				lastName: user.lastName,
 				username: user.username,
 				password: user.password,
