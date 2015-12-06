@@ -1,16 +1,71 @@
 <div class="container" ng-controller="PostDetailsController">
     <h1 class="text-center">{{model.post.title}}</h1>
     <p class="text-center">{{model.post.description}}</p>
-    <p><a class="btn btn-primary" ng-click="model.externalLink()" role="button">View Original &raquo;</a></p>
+    <p><a class="btn btn-primary btn-xs" ng-click="model.externalLink()" role="button">View Original &raquo;</a></p>
     <a href="#/publicProfile/{{model.post.userId}}">Poster: {{model.post.username}}</a>  
+    <br>
     <br>
     <label class="col-sm-2">Tags:</label>
     <div class="container col-sm-10">
         <div ng-repeat="tag in model.post.tags">
-            <p class="text-left">{{tag}}</p>
+            <p class="text-left inline-text">{{tag}}</p>
         </div>
     </div>  
 </div>
+
+<div class="container" ng-show="currentUser._id == model.post.userId || currentUser.isModerator">
+  <br>
+  <button class="btn" data-toggle="collapse" data-target="#editPost">Edit Post</button>
+  <div id="editPost" class="row placeholders collapse">
+      <div class="col-xs-10 col-sm-10 col-md-8 col-lg-6 placeholder text_left">
+          <form class="form-horizontal">
+              <div class="form-group">
+                  <label for="title" class="col-sm-2 control-label">Title</label>
+                  <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="model.post.title" placeholder="Name of article/post">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="description" class="col-sm-2 control-label">Description</label>
+                  <div class="col-sm-10">
+                  <input type="text-box" class="form-control" ng-model="model.post.description" placeholder="Description">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="url" class="col-sm-2 control-label">URL</label>
+                  <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="model.post.url" placeholder="URL">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label for="newTag" class="col-sm-2 control-label">New Tag</label>
+                  <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="model.newTag" placeholder="Add a new tag">
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                      <button class="btn btn-primary" type="button" ng-click="model.addNewTag()">Add Tag</button>
+                  </div>
+              </div>
+              <label class="col-sm-2">Tags:</label>
+              <div class="container col-sm-10">
+                  <div ng-repeat="tag in model.post.tags">
+                      <p class="text-left">{{tag}}</p>
+                  </div>
+              </div>
+              <div class="form-group">
+                  <div class="col-sm-offset-2 col-sm-10">
+                      <button class="btn btn-warning" type="button" ng-click="model.updatePost()">Update</button>
+                      <button class="btn btn-danger" type="button" ng-click="model.deletePost()">Delete</button>
+                  </div>
+              </div>
+          </form> 
+          {{model.errorText}} 
+      </div>
+  </div>
+</div>
+
 
 <div class="container" ng-hide="currentUser">
   <h3>Login to post a comment!</h3>
@@ -55,13 +110,40 @@
       <li><a href="#tabs-3">Disproof</a></li>
     </ul>
     <div id="tabs-1">
-      <p>Proin elit arcu, rutrum commodo, vehicula tempus, commodo a, risus. Curabitur nec arcu. Donec sollicitudin mi sit amet mauris. Nam elementum quam ullamcorper ante. Etiam aliquet massa et lorem. Mauris dapibus lacus auctor risus. Aenean tempor ullamcorper leo. Vivamus sed magna quis ligula eleifend adipiscing. Duis orci. Aliquam sodales tortor vitae ipsum. Aliquam nulla. Duis aliquam molestie erat. Ut et mauris vel pede varius sollicitudin. Sed ut dolor nec orci tincidunt interdum. Phasellus ipsum. Nunc tristique tempus lectus.</p>
+      <div ng-repeat="comment in model.post.opinions">
+        <div class="comment-box">
+          <p>{{comment.text}}</p>
+          <p class="text-left">Posted on {{comment.updated | date : "short"}} by <a href="#/publicProfile/{{comment.userId}}">{{comment.username}}</a></p>
+          <button ng-show="comment.userId == currentUser._id || currentUser.isModerator" class="btn btn-danger btn-xs" 
+            ng-click="model.deleteComment($index, 'opinion')">Delete Comment </button>
+          <button ng-show="comment.userId == currentUser._id" class="btn btn-warning btn-xs" 
+            ng-click="model.editComment($index, 'opinion')">Edit Comment </button>
+        </div>
+      </div>    
     </div>
     <div id="tabs-2">
-      <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+      <div ng-repeat="comment in model.post.proof">
+        <div class="comment-box">
+          <p>{{comment.text}}</p>
+          <p class="text-left">Posted on {{comment.updated | date : "short"}} by <a href="#/publicProfile/{{comment.userId}}">{{comment.username}}</a></p>
+          <button ng-show="comment.userId == currentUser._id || currentUser.isModerator" class="btn btn-danger btn-xs" 
+            ng-click="model.deleteComment($index, 'proof')">Delete Comment </button>
+          <button ng-show="comment.userId == currentUser._id" class="btn btn-warning btn-xs" 
+            ng-click="model.editComment($index, 'proof')">Edit Comment </button>            
+        </div>
+      </div>    
     </div>
     <div id="tabs-3">
-      <p>Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+      <div ng-repeat="comment in model.post.disproof">
+        <div class="comment-box">
+          <p>{{comment.text}}</p>
+          <p class="text-left">Posted on {{comment.updated | date : "short"}} by <a href="#/publicProfile/{{comment.userId}}">{{comment.username}}</a></p>
+          <button ng-show="comment.userId == currentUser._id || currentUser.isModerator" class="btn btn-danger btn-xs" 
+            ng-click="model.deleteComment($index, 'disproof')">Delete Comment </button>
+          <button ng-show="comment.userId == currentUser._id" class="btn btn-warning btn-xs" 
+            ng-click="model.editComment($index, 'disproof')">Edit Comment </button>
+        </div>
+      </div>    
     </div>
   </div>
 </div>

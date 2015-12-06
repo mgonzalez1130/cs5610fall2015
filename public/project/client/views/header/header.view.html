@@ -11,10 +11,11 @@
           </button>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <form class="navbar-form navbar-left">
-            <input type="text" class="form-control" placeholder="Search...">
+          <form class="navbar-form navbar-left" ng-submit="model.search()">
+            <input type="text" class="form-control" ng-model="model.searchText" placeholder="Search...">
           </form>
           <ul class="nav navbar-nav">
+            <li ng-class="{'active' : $location.url().indexOf('search') != -1}"><a href="#/search">Search</a></li>
             <li ng-class="{'active' : $location.url().indexOf('home') != -1}"><a href="#/home">Home</a></li>
             <li ng-class="{'active' : $location.url().indexOf('posts') != -1}"><a href="#/democrats">Posts</a></li>
             <li ng-class="{'active' : $location.url().indexOf('profile') != -1}">

@@ -10,9 +10,16 @@
 		$scope.$location = $location;
 		
 		model.logout = logout;
+		model.search = search;
 		function logout() {
 			$rootScope.currentUser = null;
 			$location.url("/home");
+		}
+		
+		function search() {
+			var text = model.searchText;
+			model.searchText = "";			
+			$location.url("/search/"+text);
 		}
 	}
 	

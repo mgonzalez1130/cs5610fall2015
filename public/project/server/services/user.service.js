@@ -88,6 +88,24 @@ module.exports = function(app, userModel) {
 		});
 	});
 	
+	//delete comment
+	app.put("/api/project/user/:userId/comment/:commentId/delete", function(req, res){
+		var userId = req.params.userId;
+		var commentId = req.params.userId;
+		userModel.deleteComment(userId, commentId).then(function(response){
+			res.json(response);
+		});
+	});
+	
+	//add comment
+	app.put("/api/project/user/:userId/comment/:commentId/add", function(req, res){
+		var userId = req.params.userId;
+		var commentId = req.params.userId;
+		userModel.addComment(userId, commentId).then(function(response){
+			res.json(response);
+		});
+	});
+	
 	//vote on comment
 	app.put("/api/project/user/:userId/comment/:commentId/vote", function(req, res){
 		var userId = req.params.userId;

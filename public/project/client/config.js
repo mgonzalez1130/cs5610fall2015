@@ -42,6 +42,14 @@
 					templateUrl: "views/register/register.view.html",
 					controller: "RegisterController as model"
 				})
+				.when("/search", {
+					templateUrl: "views/search/search.view.html",
+					controller: "SearchController as model"
+				})
+				.when("/search/:tag", {
+					templateUrl: "views/search/search.view.html",
+					controller: "SearchController as model"
+				})
 				.otherwise({
 					redirectTo: "/home"
 				})

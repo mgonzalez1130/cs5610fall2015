@@ -13,7 +13,9 @@
 			findPostsByTag : findPostsByTag,
 			createPost : createPost,
 			deletePost : deletePost,
-			updatePost : updatePost 
+			updatePost : updatePost,
+			addComment : addComment,
+			removeComment : removeComment 
 		};
 		return service;
 		

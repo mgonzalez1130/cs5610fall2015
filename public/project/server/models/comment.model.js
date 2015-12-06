@@ -51,15 +51,11 @@ module.exports = function(db, mongoose) {
 		return deferred.promise;
 	}
 	
-	//Create a new comment and returns all of the comments associated
-	//with the same postId in the new comment
+	//Create a new comment and returns the new comment
 	function createComment(comment) {
 		var deferred = q.defer();
-		var postId = comment.postId;
 		CommentModel.create(comment, function(err, res){
-			CommentModel.find({ postId : postId}, function(err, res){
-				deferred.resolve(res);
-			});
+			deferred.resolve(res);
 		});
 		return deferred.promise;
 	}

@@ -16,7 +16,9 @@
 			followUser : followUser,
 			unfollowUser : unfollowUser,
 			addPost : addPost,
-			deletePost : deletePost
+			deletePost : deletePost,
+			addComment : addComment,
+			deleteComment : deleteComment
 		};
 		return service;
 		
@@ -116,6 +118,24 @@
 		function deletePost(userId, postId) {
 			var deferred = $q.defer();
 			$http.put("/api/project/user/"+userId+"/post/"+postId+"/delete")
+			.success(function(response){
+				deferred.resolve(response);
+			});
+			return deferred.promise;
+		}
+		
+		function addComment(userId, commentId) {
+			var deferred = $q.defer();
+			$http.put("/api/project/user/"+userId+"/comment/"+commentId+"/add")
+			.success(function(response){
+				deferred.resolve(response);
+			});
+			return deferred.promise;
+		}
+		
+		function deleteComment(userId, commentId) {
+			var deferred = $q.defer();
+			$http.put("/api/project/user/"+userId+"/comment/"+commentId+"/delete")
 			.success(function(response){
 				deferred.resolve(response);
 			});

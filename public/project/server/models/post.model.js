@@ -9,6 +9,7 @@ module.exports = function(db, mongoose) {
 		findPostById: findPostById,
 		findPostsByUserId: findPostsByUserId,
 		findPostsByTag: findPostsByTag,
+		findPostsByTags: findPostsByTags,
 		createPost: createPost,
 		deletePost: deletePost,
 		updatePost: updatePost,
@@ -29,7 +30,9 @@ module.exports = function(db, mongoose) {
 	//Returns the post with the given postId
 	function findPostById(postId){
 		var deferred = q.defer();
-		PostModel.findById(postId, function(err, res){
+		PostModel.findById(postId)
+		.populate("opinions proof disproof")
+		.exec(function(err, res){
 			deferred.resolve(res);
 		});
 		return deferred.promise;		
@@ -52,6 +55,19 @@ module.exports = function(db, mongoose) {
 			deferred.resolve(res);
 		});
 		return deferred.promise;		
+	}
+	
+	//returns all posts with a tag contained in the given
+	//tags array
+	function findPostsByTags(tags) {
+		var deferred = q.defer();
+		PostModel
+		.where('tags')
+		.in(tags)
+		.exec(function(err, res){
+			deferred.resolve(res);
+		});
+		return deferred.promise;
 	}
 	
 	//Creates the given post and returns the new post
@@ -77,8 +93,10 @@ module.exports = function(db, mongoose) {
 	function updatePost(postId, post) {
 		var deferred = q.defer();
 		PostModel.findByIdAndUpdate(postId, post, function(err, res){
-			PostModel.findById(postId, function(err, post){
-				deferred.resolve(post);
+			PostModel.findById(postId)
+			.populate("opinions proof disproof")
+			.exec(function(err, res){
+				deferred.resolve(res);
 			});
 		});
 		return deferred.promise;		
@@ -96,7 +114,11 @@ module.exports = function(db, mongoose) {
 				post.opinions.push(comment._id);
 			}
 			post.save(function(err, res){
-				deferred.resolve(res);
+				PostModel.findById(postId)
+				.populate("opinions proof disproof")
+				.exec(function(err, updatedPost){
+					deferred.resolve(updatedPost);
+				});
 			});
 		});
 		return deferred.promise;
@@ -111,7 +133,11 @@ module.exports = function(db, mongoose) {
 			post.disproof.pull(commentId);
 			post.opinions.pull(commentId);
 			post.save(function(err, res){
-				deferred.resolve(res);
+				PostModel.findById(postId)
+				.populate("opinions proof disproof")
+				.exec(function(err, res){
+					deferred.resolve(res);
+				});
 			});
 		});
 		return deferred.promise;

@@ -3,9 +3,10 @@
 		.module("FinalProject")
 		.controller("PublicProfileController", PublicProfileController);
 		
-	function PublicProfileController($rootScope, $routeParams, UserService) {
+	function PublicProfileController($rootScope, $location, $routeParams, UserService) {
 		var model = this;
 		model.followUser = followUser;
+		model.deleteUser = deleteUser;
 		
 		var userId = $routeParams.userId;
 		displayUser();
@@ -37,6 +38,16 @@
 				}
 			}
 			return false;
+		}
+		
+		function deleteUser() {
+			if ($rootScope.currentUser.isModerator) {
+				UserService.deleteUserById(userId).then(function(response){
+					$location.url("/home");
+				});
+			} else {
+				$location.url("/home");
+			}
 		}
 	}
 })();

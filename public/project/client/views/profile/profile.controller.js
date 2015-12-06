@@ -5,7 +5,7 @@
 		.module("FinalProject")
 		.controller("ProfileController", ProfileController);
 		
-	function ProfileController($rootScope, UserService, PostService) {
+	function ProfileController($rootScope, UserService, PostService, CommentService) {
 		var model = this;
 		model.user = $rootScope.currentUser;
 		

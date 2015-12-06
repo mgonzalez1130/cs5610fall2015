@@ -16,6 +16,8 @@ module.exports = function(db, mongoose) {
 		unfollowUser: unfollowUser,
 		addPost: addPost,
 		deletePost: deletePost,
+		addComment: addComment, 
+		deleteComment: deleteComment,
 		voteComment: voteComment,
 		votePost: votePost
 	};
@@ -48,7 +50,7 @@ module.exports = function(db, mongoose) {
 		var deferred = q.defer();
 		UserModel
 			.findById(userId)
-			.populate("posts followers following")
+			.populate("posts followers following comments")
 			.exec(function(err, user){
 				deferred.resolve(user);
 		});
@@ -60,7 +62,7 @@ module.exports = function(db, mongoose) {
 		UserModel.findByIdAndUpdate(userId, user, function(err, result){
 			UserModel
 				.findById(userId)
-				.populate("posts followers following")
+				.populate("posts followers following comments")
 				.exec(function(err, user){
 					deferred.resolve(user);
 			});			
@@ -82,7 +84,7 @@ module.exports = function(db, mongoose) {
 		var deferred = q.defer();
 		UserModel
 			.find({ username : username})
-			.populate("posts followers following")
+			.populate("posts followers following comments")
 			.exec(function(err, user){
 				deferred.resolve(user);
 		});		
@@ -95,7 +97,7 @@ module.exports = function(db, mongoose) {
 		.findOne({ 
 			username : credentials.username, 
 			password : credentials.password})
-		.populate("posts followers following")
+		.populate("posts followers following comments")
 		.exec(function(err, user){
 			deferred.resolve(user);
 		});
@@ -115,7 +117,7 @@ module.exports = function(db, mongoose) {
 						//Return follower
 						UserModel
 							.findById(followerId)
-							.populate("posts followers following")
+							.populate("posts followers following comments")
 							.exec(function(err, user){
 								deferred.resolve(user);
 						});
@@ -139,7 +141,7 @@ module.exports = function(db, mongoose) {
 						//Return follower
 						UserModel
 							.findById(followerId)
-							.populate("posts followers following")
+							.populate("posts followers following comments")
 							.exec(function(err, user){
 								deferred.resolve(user);
 						});
@@ -157,7 +159,7 @@ module.exports = function(db, mongoose) {
 			user.save(function(err, res){
 				UserModel
 					.findById(userId)
-					.populate("posts followers following")
+					.populate("posts followers following comments")
 					.exec(function(err, user){
 						deferred.resolve(user);
 				});
@@ -173,7 +175,7 @@ module.exports = function(db, mongoose) {
 			user.save(function(err, res){
 				UserModel
 					.findById(userId)
-					.populate("posts followers following")
+					.populate("posts followers following comments")
 					.exec(function(err, user){
 						deferred.resolve(user);
 				});
@@ -181,6 +183,38 @@ module.exports = function(db, mongoose) {
 		});
 		return deferred.promise;
 	}
+
+	function addComment(userId, commentId) {
+		var deferred = q.defer();
+		UserModel.findById(userId, function(err, user){
+			user.comments.push(commentId);
+			user.save(function(err, res){
+				UserModel
+					.findById(userId)
+					.populate("posts followers following comments")
+					.exec(function(err, user){
+						deferred.resolve(user);
+				});
+			});
+		});
+		return deferred.promise;
+	}	
+		
+	function deleteComment(userId, commentId) {
+		var deferred = q.defer();
+		UserModel.findById(userId, function(err, user){
+			user.comments.pull(commentId);
+			user.save(function(err, res){
+				UserModel
+					.findById(userId)
+					.populate("posts followers following comments")
+					.exec(function(err, user){
+						deferred.resolve(user);
+				});
+			});
+		});
+		return deferred.promise;
+	}	
 		
 	function voteComment(userId, commentId) {
 		var deferred = q.defer();
@@ -189,7 +223,7 @@ module.exports = function(db, mongoose) {
 			user.save(function(err, res){
 				UserModel
 					.findById(userId)
-					.populate("posts followers following")
+					.populate("posts followers following comments")
 					.exec(function(err, user){
 						deferred.resolve(user);
 				});
@@ -205,7 +239,7 @@ module.exports = function(db, mongoose) {
 			user.save(function(err, res){
 				UserModel
 					.findById(userId)
-					.populate("posts followers following")
+					.populate("posts followers following comments")
 					.exec(function(err, user){
 						deferred.resolve(user);
 				});

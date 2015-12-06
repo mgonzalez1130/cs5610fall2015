@@ -11,7 +11,12 @@
 		model.addNewTag = addNewTag;
 		
 		function addNewTag() {
-			model.newPost.tags.push(model.newTag);
+			var tags = model.newTag.split(" ");
+			for (var i=0; i<tags.length; i++) {
+				if (model.newPost.tags.indexOf(tags[i]) < 0){
+					model.newPost.tags.push(tags[i].toLowerCase());	
+				}					
+			}
 		}
 
 		function submit() {
