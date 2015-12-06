@@ -41,7 +41,9 @@
               </ul>
             </div>
                     
-            <button class="btn btn-primary" type="button"><a id="new-post-button" href="#/newPost">New Post</a></button>
+            <button class="btn btn-primary" type="button" ng-show="currentUser">
+              <a id="new-post-button" href="#/newPost">New Post</a>
+            </button>
           </div>
       </div>
       

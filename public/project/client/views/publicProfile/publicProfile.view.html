@@ -1,0 +1,88 @@
+<h1 class="page-header">Public Profile</h1>
+
+<div class="row placeholders">
+    <div class="col-xs-10 col-sm-10 col-md-8 col-lg-6 placeholder text_left">
+		<div class ="panel panel-default">
+			<div class="panel-heading"><h2>{{model.user.username}}</h2></div>
+			<div class="panel-body">
+				
+				<table class = "table table-striped">
+					<thead></thead>
+					<tbody>
+						<tr>
+							<td>Username: {{model.user.username}}</td>
+						</tr>
+						<tr>
+							<td>First Name: {{model.user.firstName}}</td>
+						</tr>
+						<tr>
+							<td>Last Name: {{model.user.lastName}}</td>
+						</tr>
+						<tr>
+							<td>Email: {{model.user.email}}</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<button class="btn" data-toggle="collapse" data-target="#followingTable">I'm Following:</button>
+				<button class="btn" data-toggle="collapse" data-target="#followersTable">My Followers</button>
+				<button class="btn" data-toggle="collapse" data-target="#posts">My Posts</button>
+				<button class="btn" ng-show="currentUser" ng-click="model.followUser()">Follow Me!</button>
+				<br>
+				{{model.errorText}}
+				
+				<div class="table-response collapse" id="posts">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th data-field="title">
+									<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Title
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="post in model.user.posts">
+								<td><a href="#/post/{{post._id}}">{{post.title}}</a></td>                     
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				
+				<div class="table-response collapse" id="followersTable">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th data-field="username">
+									<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Username
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in model.user.followers">
+								<td><a href="#/publicProfile/{{user._id}}">{{user.username}}</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div> 
+				
+				<div class="table-response collapse" id="followingTable">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<tr>
+								<th data-field="username">
+									<span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Username
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="user in model.user.following">
+								<td><a href="#/publicProfile/{{user._id}}">{{user.username}}</a></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>				 
+				  
+			</div>
+		</div>
+    </div>
+</div>

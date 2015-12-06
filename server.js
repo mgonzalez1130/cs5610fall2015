@@ -12,10 +12,11 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 /*
 * Require statements for assignments
 */
-require('./public/assignment/server/app.js')(app);
+//require('./public/assignment/server/app.js')(app);
 
 /*
 * Require statements for final project
 */
+require('./public/project/server/app.js')(app);
 
 app.listen(port, ipaddress);

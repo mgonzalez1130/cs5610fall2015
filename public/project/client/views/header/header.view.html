@@ -1,4 +1,4 @@
-<div class="container"  ng-controller="HeaderController">
+<div class="container"  ng-controller="HeaderController as model">
   <div class="masthead">
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
@@ -17,11 +17,16 @@
           <ul class="nav navbar-nav">
             <li ng-class="{'active' : $location.url().indexOf('home') != -1}"><a href="#/home">Home</a></li>
             <li ng-class="{'active' : $location.url().indexOf('posts') != -1}"><a href="#/democrats">Posts</a></li>
-            <li ng-class="{'active' : $location.url().indexOf('profile') != -1}"><a href="#/profile">Profile</a></li>
+            <li ng-class="{'active' : $location.url().indexOf('profile') != -1}">
+              <a href="#/profile" ng-show="currentUser">Profile</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li ng-class="{'active' : $location.url().indexOf('login') != -1}"><a href="#/login">Login</a></li>
-            <li ng-class="{'active' : $location.url().indexOf('register') != -1}"><a href="#/register">Register</a></li>
+            <li ng-class="{'active' : $location.url().indexOf('login') != -1}">
+              <a href="#/login" ng-hide="currentUser">Login</a></li>
+            <li ng-class="{'active' : $location.url().indexOf('register') != -1}">
+              <a href="#/register" ng-hide="currentUser">Register</a></li>
+            <li>
+              <a href="#/logout" ng-click="model.logout()" ng-show="currentUser">Logout</a></li>
           </ul>
         </div>
       </div>
